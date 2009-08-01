@@ -1,18 +1,20 @@
-%define realname   Net-Rendezvous-Publish
+%define upstream_name    Net-Rendezvous-Publish
+%define upstream_version 0.04
 
-Name:		perl-%{realname}
-Version:    0.04
-Release: %mkrel 5
-License:	GPL or Artistic
-Group:		Development/Perl
+Name:       perl-%{upstream_name}
+Version:    %perl_convert_version %{upstream_version}
+Release:    %mkrel 1
+
 Summary:    Module to publish Rendezvous services 
-Source0:    ftp://ftp.perl.org/pub/CPAN/modules/by-module/Net/%{realname}-%{version}.tar.bz2
-Url:		http://search.cpan.org/dist/%{realname}
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-BuildRequires:	perl-devel 
+License:	GPL+ or Artistic
+Group:		Development/Perl
+Url:		http://search.cpan.org/dist/%{upstream_name}
+Source0:    ftp://ftp.perl.org/pub/CPAN/modules/by-module/Net/%{upstream_name}-%{upstream_version}.tar.bz2
+
 BuildRequires:  perl(Class::Accessor::Lvalue) 
 BuildRequires:  perl(Module::Pluggable)
-BuildArch:      noarch
+BuildArch: noarch
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}
 # (misc) so far,only howl backend is packaged
 # maybe splitting the null backend would be cleaner ?
 Requires:    perl-Net-Rendezvous-Publish-Backend
@@ -22,7 +24,7 @@ Net::Rendezvous::Publish allows you to publish Zeroconf ( or Rendezvous, or
 Bonjour ) services, using a mDNS responder
 
 %prep
-%setup -q -n %{realname}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
 %{__perl} Makefile.PL INSTALLDIRS=vendor
@@ -44,4 +46,3 @@ rm -rf $RPM_BUILD_ROOT
 %doc Changes 
 %{perl_vendorlib}/*
 %{_mandir}/man3/*
-
